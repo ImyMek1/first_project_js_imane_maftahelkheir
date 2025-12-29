@@ -26,6 +26,75 @@ function SpecialChar(password) {
   return chars.some(c => password.includes(c));
 }
 
+//* /////////SignUP/////////////
+
+function signUp() {
+  let name = prompt("Full name:");
+  if (Exit(name)) return;
+
+  name = name.trim();
+  if (
+    name.replaceAll(" ", "").length < 5 ||
+    /[^a-zA-Z ]/.test(name)
+  ) {
+    alert("Invalid name");
+    return;
+  }
+  name = formatName(name);
+
+  let email = prompt("Email:");
+  if (Exit(email)) return;
+
+  email = email.trim().toLowerCase();
+  if (
+    email.includes(" ") ||
+    email.length < 10 ||
+    email.split("@").length !== 2 ||
+    usersDataB.find(u => u.email === email)
+  ) {
+    alert("Invalid email");
+    return;
+  }
+
+  let age = prompt("Enter age:");
+  if (Exit(age)) return;
+
+  age = age.trim();
+
+  if (age === "" || age.length >= 3) {
+    alert("Invalid age");
+    return;
+  }
+
+  for (let c of age) {
+    if (c < "0" || c > "9") {
+      alert("Invalid age");
+      return;
+    }
+  }
+
+  let password = prompt("Password:");
+  if (Exit(password)) return;
+
+  if (
+    password.trim() !== password ||
+    password.includes(" ") ||
+    password.length < 7 ||
+    !SpecialChar(password)
+  ) {
+    alert("Invalid password");
+    return;
+  }
+
+  let confirm = prompt("Confirm password:");
+  if (password !== confirm) {
+    alert("Blocked");
+    return;
+  }
+
+  usersDataB.push(new User(name, email, age, password));
+  alert("Account created successfully");
+}
 
 function mainMenu() {
     let choice;
