@@ -91,10 +91,41 @@ function signUp() {
     alert("Blocked");
     return;
   }
+// let saveuser = new User(name, email, age, password)
+//   usersDataB.push(saveuser);
 
-  usersDataB.push(new User(name, email, age, password));
-  alert("Account created successfully");
+ usersDataB.push(new User(name, email, age, password)); 
+ alert("Account created successfully");
+
+ console.table(usersDataB);
+
 }
+
+//* /////////Login/////////////
+
+function login() {
+  let email = prompt("Enter your email:");
+  if (Exit(email)) return;
+
+  let user = usersDataB.find(u => u.email === email);
+
+  if (!user) {
+    alert("Email Not Found");
+    return;
+  }
+  let password = prompt("Enter your password:");
+
+  if (Exit(password)) return;
+
+  if (user.password !== password) {
+    alert("Wrong Password");
+    return;
+  }
+  alert("Welcome " + user.name);
+}
+
+
+//* /////////Menu/////////////
 
 function mainMenu() {
     let choice;
@@ -107,7 +138,7 @@ function mainMenu() {
         Write "exit" to cancel`
         );
 
-        if (Exit(choice)) continue;
+        if (Exit(choice)) break;
 
         if (choice === "1") signUp();
         if (choice === "2") login();
@@ -117,3 +148,5 @@ function mainMenu() {
 }
 
 mainMenu();
+
+
