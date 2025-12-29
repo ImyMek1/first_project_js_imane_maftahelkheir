@@ -91,8 +91,6 @@ function signUp() {
     alert("Blocked");
     return;
   }
-// let saveuser = new User(name, email, age, password)
-//   usersDataB.push(saveuser);
 
  usersDataB.push(new User(name, email, age, password)); 
  alert("Account created successfully");
@@ -124,6 +122,26 @@ function login() {
   alert("Welcome " + user.name);
 }
 
+//* /////////Change Password/////////////
+
+function changePassword() {
+  let email = prompt("Enter your email:");
+  if (Exit(email)) return;
+
+  let user = usersDataB.find(u => u.email === email);
+  if (!user) 
+    return alert("Email not found");
+
+  let newPass = prompt("Enter new password:");
+  if (
+    newPass.includes(" ") ||
+    newPass.length < 7 ||
+    !SpecialChar(newPass)) 
+    return alert("Invalid password");
+
+  user.password = newPass;
+  alert("Password changed");
+}
 
 //* /////////Menu/////////////
 
