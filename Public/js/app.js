@@ -6,6 +6,9 @@ class User {
         this.email = email;
         this.age = age;
         this.password = password;
+        this.balance = 0;
+        this.loan = 0;
+        this.investment = 0;
     }
 }
 
@@ -120,6 +123,8 @@ function login() {
     return;
   }
   alert("Welcome " + user.name);
+  bankMenu(user);
+
 }
 
 //* /////////Change Password/////////////
@@ -141,6 +146,25 @@ function changePassword() {
 
   user.password = newPass;
   alert("Password changed");
+}
+
+//* /////////Bank Menu/////////////
+function bankMenu(user) {
+
+    let choice;
+    do {
+        choice = prompt(
+    "Balance: " + user.balance + "DH"
+          `Choose a choice 
+1- Logout    
+2- Withdraw Money
+3- Deposit Money
+4- Take a Loan
+5- Invest
+6- History`  
+        );
+
+    } while (true);
 }
 
 //* /////////Menu/////////////
