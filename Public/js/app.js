@@ -27,3 +27,24 @@ function SpecialChar(password) {
 }
 
 
+function mainMenu() {
+    let choice;
+    do {
+        choice = prompt(
+       `Choose a choice     
+1- SignUp
+2- Login
+3- Change password
+        Write "exit" to cancel`
+        );
+
+        if (Exit(choice)) continue;
+
+        if (choice === "1") signUp();
+        if (choice === "2") login();
+        if (choice === "3") changePassword();
+
+    } while (true);
+}
+
+mainMenu();
