@@ -9,8 +9,57 @@ class User {
         this.balance = 0;
         this.loan = 0;
         this.investment = 0;
+        this.history = [];
     }
+    
+    withdraw(amount) {
+    if (amount <= this.balance) {
+      this.balance -= amount;
+      this.history.push(`Withdraw: -${amount}`);
+    }
+  }
+
+  deposit(amount) {
+    if (amount <= 1000) {
+      this.balance += amount;
+      this.history.push(`Deposit: +${amount}`);
+    }
+  }
+
+  takeLoan() {
+    let loanAmount = this.balance * 0.2;
+    this.balance += loanAmount;
+    this.loan += loanAmount;
+    this.history.push(`Loan taken: +${loanAmount}`);
+  }
+
+  invest(amount) {
+    if (amount <= this.balance) {
+      this.balance -= amount;
+      this.investment += amount;
+      this.history.push(`Invested: -${amount}`);
+    }
+  }
+
+  applyLoanLoss() {
+    if (this.loan > 0) {
+      let loss = this.loan * 0.1;
+      this.balance -= loss;
+      this.loan -= loss;
+      this.history.push(`Loan loss: -${loss}`);
+    }
+  }
+
+  applyInvestmentGain() {
+    if (this.investment > 0 && this.investment < this.investment * 1.2) {
+      let gain = this.investment * 0.2;
+      this.balance += gain;
+      this.history.push(`Investment gain: +${gain}`);
+    }
+  }
 }
+
+//* /////////Function/////////////
 
 function Exit(value) {
   return value && value.toLowerCase() === "exit";
@@ -149,22 +198,44 @@ function changePassword() {
 }
 
 //* /////////Bank Menu/////////////
+
 function bankMenu(user) {
+  let choice;
+  do {
+    choice = prompt(    
+`Balance: ${user.balance} DH
+1- Withdraw
+2- Deposit
+3- Loan
+4- Invest
+5- History
+6- Logout`
+);
 
-    let choice;
-    do {
-        choice = prompt(
-    "Balance: " + user.balance + "DH"
-          `Choose a choice 
-1- Logout    
-2- Withdraw Money
-3- Deposit Money
-4- Take a Loan
-5- Invest
-6- History`  
-        );
+    if (choice === "1") {
+      let amount = Number(prompt("Withdraw amount:"));
+      user.withdraw(amount);
+    }
 
-    } while (true);
+    if (choice === "2") {
+      let amount = Number(prompt("Deposit amount (<=1000):"));
+      user.deposit(amount);
+    }
+
+    if (choice === "3") {
+      user.takeLoan();
+    }
+
+    if (choice === "4") {
+      let amount = Number(prompt("Investment amount:"));
+      user.invest(amount);
+    }
+
+    if (choice === "5") {
+      console.log(user.history);
+    }
+
+  } while (choice !== "6");
 }
 
 //* /////////Menu/////////////
